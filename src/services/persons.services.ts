@@ -9,6 +9,16 @@ const getPersons = async () => {
     }
 }
 
+const getPerson = async (idPerson: number) => {
+    try {
+        return await pool.query('SELECT * FROM persons WHERE id_person = $1',
+            [idPerson])
+    } catch (error) {
+        console.log(`Something go wrong to get a person Service ${error}`);
+        throw error
+    }
+}
+
 const postPerson = async (
     persons: {
         first_name: string,
@@ -60,7 +70,7 @@ const updatePerson = async (
 
 const deletePerson = async (idPerson: number) => {
     try {
-        const deletePerson = await pool.query('DELETE FROM user WHERE id_person =$1',
+        const deletePerson = await pool.query('DELETE FROM persons WHERE id_person =$1',
             [idPerson])
         return deletePerson
     } catch (error) {
@@ -73,5 +83,6 @@ export = {
     getPersons,
     postPerson,
     updatePerson,
-    deletePerson
+    deletePerson,
+    getPerson,
 }

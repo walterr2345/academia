@@ -10,6 +10,23 @@ const getPersons = async (_req: any, res: any) => {
     }
 }
 
+const getPerson = async (req: any, res: any) => {
+    const idPerson = parseInt(req.params.id)
+    if (!idPerson) {
+        res.status(400).send('ID is missing')
+    }
+    try {
+        const person = await personService.getPerson(idPerson)
+        res.status(200).send({
+            status: 'SUCCESS',
+            data: person
+        })
+    } catch (error) {
+        console.log(`Something go wrong wi`);
+
+    }
+}
+
 const postPersons = async (req: any, res: any) => {
     try {
         const postPersons = await personService.postPerson(req.body)
@@ -25,8 +42,6 @@ const postPersons = async (req: any, res: any) => {
 
 const updatePerson = async (req: any, res: any) => {
     const idPerson = parseInt(req.params.id)
-    console.log(req.params.id);
-    
     if (!idPerson) {
         res.status(400).send('ID is missing ')
     }
@@ -42,20 +57,20 @@ const updatePerson = async (req: any, res: any) => {
     }
 }
 
-const deletePerson =async (req:any, res:any) => {
-    const idPerson =parseInt(req.body.id)
+const deletePerson = async (req: any, res: any) => {
+    const idPerson = parseInt(req.params.id)
     if (!idPerson) {
         res.status(400).send(`ID is missing`)
     }
     try {
         const deletePerson = await personService.deletePerson(idPerson)
         res.status(200).send({
-            status:`SUCESS`,
-            data:deletePerson
+            status: `SUCESS`,
+            data: deletePerson
         })
     } catch (error) {
         console.log(`Something go wrong delete person controller ${error}`);
-        
+
     }
 }
 
@@ -63,6 +78,7 @@ export = {
     getPersons,
     postPersons,
     updatePerson,
-    deletePerson
+    deletePerson,
+    getPerson
 }
 
